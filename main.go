@@ -1,13 +1,13 @@
 package main
 
 import (
-	"errors"
 	"os"
 
 	"github.com/RideShare-Server/aws"
 	"github.com/RideShare-Server/configuration"
 	"github.com/RideShare-Server/db"
 	"github.com/RideShare-Server/handlers/requests"
+	"github.com/RideShare-Server/utils"
 
 	validator "gopkg.in/go-playground/validator.v9"
 
@@ -41,9 +41,30 @@ func main() {
 	// 	fmt.Print(err.Error())
 	// }
 
-	// u1 := "find.leonardo@gmail.com"
-	u2 := "<EMAIL>"
-	password := "<PASSWORD>"
+	TestDBConnection()
+}
+
+func TestDBConnection() {
+	dsn, err := awsService.GetDns()
+	if err != nil {
+		panic(err)
+	}
+
+	utils.PrettyPrint(dsn)
+
+	dbContext, err := db.Connect(dsn)
+	if err != nil {
+		panic(err)
+		return
+	}
+
+	stats := dbContext.DB().Stats()
+	utils.PrettyPrint(stats)
+}
+
+func TestLogin() {
+	u2 := ""
+	password := ""
 	authResult, err := awsService.Authenticate(u2, password)
 	if err != nil {
 		panic(err)
@@ -52,23 +73,6 @@ func main() {
 	err = awsService.ValidateToken(authResult.AccessToken)
 	if err != nil {
 		panic(err)
-	}
-}
-
-func TestDBConnection() {
-	connectionString, err := awsService.GetRDSConnectionString()
-	if err != nil {
-		panic(err)
-	}
-
-	dbContext, err := db.Connect(connectionString)
-	if err != nil {
-		panic(err)
-		return
-	}
-
-	if dbContext == nil {
-		panic(errors.New("DB context is null"))
 	}
 }
 
