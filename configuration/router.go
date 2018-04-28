@@ -3,11 +3,13 @@ package configuration
 import (
 	"net/http"
 
+	"github.com/jinzhu/gorm"
+
 	"github.com/labstack/echo"
 )
 
 // SetupRouter inserts the application routes into the Echo context.
-func SetupRouter(e *echo.Echo) {
+func SetupRouter(e *echo.Echo, db *gorm.DB) {
 	//-----------------------
 	// Base Routes
 	//-----------------------

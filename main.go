@@ -5,9 +5,8 @@ import (
 
 	"github.com/RideShare-Server/aws"
 	"github.com/RideShare-Server/configuration"
-	"github.com/RideShare-Server/db"
 	"github.com/RideShare-Server/handlers/requests"
-	"github.com/RideShare-Server/utils"
+	"github.com/RideShare-Server/log"
 
 	validator "gopkg.in/go-playground/validator.v9"
 
@@ -17,49 +16,16 @@ import (
 var awsService = aws.New()
 
 func main() {
-	//e := echo.New()
+	e := echo.New()
 
-	// 1. Load our env if needed.
 	configuration.SetupEnv()
+	configuration.SetupCORS(e)
 
-	// 2. Setup our database connection.
+	database := configuration.InitializeDBConnection(awsService)
+	configuration.SetupRouter(e, database)
+	log.InitLog()
 
-	// 3. Add cors middlewear.
-	//configuration.SetupCors(e)
-
-	// 4. Route our requests.
-	//configuration.SetupRouter(e, database)
-
-	// 7. Setup our logger.
-	//log.InitLog()
-
-	// 8. Fire up the server.
-	//startServer(e)
-	// a := nhtsa.NewService()
-	// models, err := a.GetModels("474")
-	// if err != nil {
-	// 	fmt.Print(err.Error())
-	// }
-
-	TestDBConnection()
-}
-
-func TestDBConnection() {
-	dsn, err := awsService.GetDns()
-	if err != nil {
-		panic(err)
-	}
-
-	utils.PrettyPrint(dsn)
-
-	dbContext, err := db.Connect(dsn)
-	if err != nil {
-		panic(err)
-		return
-	}
-
-	stats := dbContext.DB().Stats()
-	utils.PrettyPrint(stats)
+	startServer(e)
 }
 
 func TestLogin() {

@@ -92,7 +92,6 @@ func runAutoMigrations() {
 	dbContext.AutoMigrate(
 		&models.Address{},
 		&models.Comment{},
-		&models.Garage{},
 		&models.Motorcycle{},
 		&models.PitStop{},
 		&models.Ride{},
