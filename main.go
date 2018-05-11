@@ -3,17 +3,15 @@ package main
 import (
 	"os"
 
-	"github.com/RideShare-Server/aws"
 	"github.com/RideShare-Server/configuration"
-	"github.com/RideShare-Server/handlers/requests"
+	"github.com/RideShare-Server/handlers/requestTypes"
 	"github.com/RideShare-Server/log"
+	"github.com/RideShare-Server/services/aws"
 
 	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/labstack/echo"
 )
-
-var awsService = aws.New()
 
 func main() {
 	e := echo.New()
@@ -21,7 +19,7 @@ func main() {
 	configuration.SetupEnv()
 	configuration.SetupCORS(e)
 
-	database := configuration.InitializeDBConnection(awsService)
+	database := configuration.InitializeDBConnection()
 	configuration.SetupRouter(e, database)
 	log.InitLog()
 
@@ -29,21 +27,22 @@ func main() {
 }
 
 func TestLogin() {
+	var authService = aws.NewCognitoService()
 	u2 := ""
 	password := ""
-	authResult, err := awsService.Authenticate(u2, password)
+	authResult, err := authService.Authenticate(u2, password)
 	if err != nil {
 		panic(err)
 	}
 
-	err = awsService.ValidateToken(authResult.AccessToken)
+	err = authService.ValidateToken(authResult.AccessToken)
 	if err != nil {
 		panic(err)
 	}
 }
 
 func startServer(e *echo.Echo) {
-	e.Validator = &requests.CustomValidator{
+	e.Validator = &requestTypes.CustomValidator{
 		Validator: validator.New(),
 	}
 

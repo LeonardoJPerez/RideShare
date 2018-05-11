@@ -38,7 +38,6 @@
     "private/protocol/restxml",
     "private/protocol/xml/xmlutil",
     "service/cognitoidentityprovider",
-    "service/rds/rdsutils",
     "service/s3",
     "service/sts"
   ]
@@ -78,21 +77,6 @@
     "utils"
   ]
   revision = "bbbc9744f62454eecba8d85244d80a5193b93767"
-
-[[projects]]
-  name = "github.com/discovry/streamfinderv3-api"
-  packages = [
-    "log",
-    "model",
-    "services",
-    "services/mixer",
-    "services/twitch",
-    "services/youtube",
-    "store",
-    "utils"
-  ]
-  revision = "c0cb2bbe7f3ba211575d9ca83fa96073c4355473"
-  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -141,12 +125,6 @@
   packages = ["proto"]
   revision = "925541529c1fa6821df4e44ce2723319eb2be768"
   version = "v1.0.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/google/go-querystring"
-  packages = ["query"]
-  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
   branch = "master"
@@ -285,19 +263,11 @@
   revision = "dcecefd839c4193db0d35b88ec65b4c12d360ab0"
 
 [[projects]]
-  name = "github.com/volatiletech/authboss"
-  packages = ["."]
-  revision = "b55beb15fa2b0b9bf41d9b179d1ba92578f32e22"
-  version = "v1.2.0"
-
-[[projects]]
   branch = "master"
   name = "golang.org/x/crypto"
   packages = [
     "acme",
     "acme/autocert",
-    "bcrypt",
-    "blowfish",
     "ssh/terminal"
   ]
   revision = "2b6c08872f4b66da917bb4ce98df4f0307330f78"
@@ -331,18 +301,6 @@
   revision = "79b0c6888797020a994db17c8510466c72fe75d9"
 
 [[projects]]
-  branch = "master"
-  name = "google.golang.org/api"
-  packages = [
-    "gensupport",
-    "googleapi",
-    "googleapi/internal/uritemplates",
-    "googleapi/transport",
-    "youtube/v3"
-  ]
-  revision = "8b8c1d4168b3aa7d5fbdb9eb159a1a7ac0cc146d"
-
-[[projects]]
   name = "google.golang.org/appengine"
   packages = [
     "internal",
@@ -365,6 +323,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "2f0fc25d3e14a638574afd91aadb18a5beb5231cf93012550de73bedd66d24ad"
+  inputs-digest = "66754813a3ff03166c9aadfbf8a8405b98b844a5ea30a6f3379e78a36308ec6c"
   solver-name = "gps-cdcl"
   solver-version = 1

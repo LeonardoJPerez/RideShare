@@ -3,22 +3,28 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/RideShare-Server/handlers/requests"
-	"github.com/discovry/streamfinderv3-api/store"
+	"github.com/RideShare-Server/handlers/requestTypes"
+	"github.com/RideShare-Server/services"
+
 	"github.com/labstack/echo"
 )
 
-type AuthController struct {
-	Store *store.ChannelStore
+// AuthHandler :
+type AuthHandler struct {
+	authProvider services.AuthInterface
 }
 
-func NewAuthController() *AuthController {
-	c := new(AuthController)
+// NewAuthHandler :
+func NewAuthHandler(authProvider services.AuthInterface) *AuthHandler {
+	c := new(AuthHandler)
+	c.authProvider = authProvider
+
 	return c
 }
 
-func (c *MotorcycleController) Login(ctx echo.Context) error {
-	request := new(requests.LoginRequest)
+// Login :
+func (c *AuthHandler) Login(ctx echo.Context) error {
+	request := new(requestTypes.LoginRequest)
 	if err := ctx.Bind(request); err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
 	}
@@ -28,6 +34,10 @@ func (c *MotorcycleController) Login(ctx echo.Context) error {
 	}
 
 	// Authenticate and return token.
+	res, err := c.authProvider.Authenticate(request.UserName, request.Password)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
 
-	return ctx.JSON(http.StatusOK, "{success='true'}")
+	return ctx.JSON(http.StatusOK, res)
 }

@@ -5,21 +5,24 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/discovry/streamfinderv3-api/store"
+	"github.com/RideShare-Server/stores"
 	"github.com/juju/errors"
 	"github.com/labstack/echo"
 )
 
-type MotorcycleController struct {
-	Store *store.ChannelStore
+// MotorcycleHandler :
+type MotorcycleHandler struct {
+	Store *stores.MotorcycleStore
 }
 
-func NewChannelController() *MotorcycleController {
-	c := new(MotorcycleController)
+// NewMotorcycleHandler :
+func NewMotorcycleHandler() *MotorcycleHandler {
+	c := new(MotorcycleHandler)
 	return c
 }
 
-func (c *MotorcycleController) GetMotorcycle(ctx echo.Context) error {
+// GetMotorcycle :
+func (c *MotorcycleHandler) GetMotorcycle(ctx echo.Context) error {
 	id64, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
 		return errors.Trace(err)
