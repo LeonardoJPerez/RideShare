@@ -41,3 +41,23 @@ func (c *AuthHandler) Login(ctx echo.Context) error {
 
 	return ctx.JSON(http.StatusOK, res)
 }
+
+// ValidateToken :
+func (c *AuthHandler) ValidateToken(ctx echo.Context) error {
+	request := new(requestTypes.LoginRequest)
+	if err := ctx.Bind(request); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	if err := ctx.Validate(request); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	// Authenticate and return token.
+	res, err := c.authProvider.Authenticate(request.UserName, request.Password)
+	if err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+
+	return ctx.JSON(http.StatusOK, res)
+}
