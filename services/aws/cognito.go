@@ -69,6 +69,35 @@ func (s CognitoService) CreateUser(username, password string) (*services.AuthRes
 	return nil, err
 }
 
+func (s CognitoService) ChangePassword(username string) (*services.AuthResult, error) {
+	svc := cognitoidentityprovider.New(s.session, &aws.Config{Region: aws.String(s.Region)})
+
+	params := &cognitoidentityprovider.ForgotPasswordInput{
+		ClientId: aws.String(clientID),
+		Username: aws.String(username),
+	}
+
+	resp, err := svc.ForgotPassword(params)
+	utils.PrettyPrint(resp)
+
+	return nil, err
+}
+
+func (s CognitoService) ConfirmChangePassword(username, password, code string) (*services.AuthResult, error) {
+	svc := cognitoidentityprovider.New(s.session, &aws.Config{Region: aws.String(s.Region)})
+	params := &cognitoidentityprovider.ConfirmForgotPasswordInput{
+		ClientId:         aws.String(clientID),
+		ConfirmationCode: aws.String(code),
+		Password:         aws.String(password),
+		Username:         aws.String(username),
+	}
+
+	resp, err := svc.ConfirmForgotPassword(params)
+	utils.PrettyPrint(resp)
+
+	return nil, err
+}
+
 // Authenticate :
 func (s CognitoService) Authenticate(username, password string) (*services.AuthResult, error) {
 	resp, err := s.initiateAuth(username, password)

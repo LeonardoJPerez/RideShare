@@ -11,6 +11,14 @@ type (
 		UserName string `json:"username"`
 		Password string `json:"password"`
 	}
+	ChangePasswordRequest struct {
+		UserName string `json:"username"`
+	}
+
+	ConfirmChangePasswordRequest struct {
+		UserName string `json:"username"`
+		COde     string `json:"code"`
+	}
 )
 
 func (cv *CustomValidator) Validate(i interface{}) error {

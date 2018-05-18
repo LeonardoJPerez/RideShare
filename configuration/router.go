@@ -25,5 +25,6 @@ func SetupRouter(e *echo.Echo, db *gorm.DB) {
 	authHandler := handlers.NewAuthHandler(authProvider)
 	authRoutes := e.Group("/auth")
 	authRoutes.POST("", authHandler.Login)
-	authRoutes.POST("validate", authHandler.ValidateToken)
+	authRoutes.POST("/validate", authHandler.ValidateToken)
+	authRoutes.POST("/change", authHandler.ChangePassword)
 }
