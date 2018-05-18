@@ -97,5 +97,6 @@ func runAutoMigrations() {
 		&models.Ride{},
 		&models.RouteMarker{},
 		&models.User{},
+		&models.GoogleAuth{},
 	)
 }

@@ -22,13 +22,15 @@ const (
 
 	// Environment :
 	Environment = "DEV"
+
 	// Migrate :
 	Migrate = "MIGRATE"
 
-	DbParams = "DB_PARAMS"
-
 	// RedisURL :
 	RedisURL = "REDIS_URL"
+
+	// ApplicationRootURL :
+	ApplicationRootURL = "APP_URL"
 
 	// AuthRootURL :
 	AuthRootURL = "AUTH_ROOT_URL"
@@ -36,6 +38,16 @@ const (
 	AuthLoginOkPath = "AUTH_LOGIN_OK_PATH"
 	// AuthLogoutOkPath :
 	AuthLogoutOkPath = "AUTH_LOGOUT_OK_PATH"
+
+	// AuthCookieStoreKey :
+	AuthCookieStoreKey = "AUTH_COOKIE_STORE_KEY"
+	// AuthSessionStoreKey :
+	AuthSessionStoreKey = "AUTH_SESSION_STORE_KEY"
+
+	// GoogleAuthClientID :
+	GoogleAuthClientID = "GOOGLE_AUTH_CLIENT_ID"
+	// GoogleAuthClientSecret :
+	GoogleAuthClientSecret = "GOOGLE_AUTH_CLIENT_SECRET"
 
 	// LogLevel :
 	LogLevel = "LOG_LEVEL"

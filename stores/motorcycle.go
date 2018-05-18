@@ -54,13 +54,23 @@ func (store *MotorcycleStore) GetByUser(userID uint) ([]*models.Motorcycle, erro
 }
 
 // Insert :
-func (store *MotorcycleStore) Insert(g *models.Motorcycle) (*models.Motorcycle, error) {
-	err := store.Database.Create(g).Error
+func (store *MotorcycleStore) Insert(m *models.Motorcycle) (*models.Motorcycle, error) {
+	err := store.Database.Create(m).Error
 	if err != nil {
 		return nil, err
 	}
 
-	return g, nil
+	return m, nil
+}
+
+// Update :
+func (store *MotorcycleStore) Update(m *models.Motorcycle) (*models.Motorcycle, error) {
+	err := store.Database.Save(m).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return m, nil
 }
 
 // Remove :

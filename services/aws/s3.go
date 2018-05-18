@@ -30,18 +30,18 @@ func NewS3Service() *S3Service {
 
 // CloudName prepends the given string
 func (s *S3Service) CloudName(env string) string {
-	if strings.HasPrefix(env, "viro-") {
+	if strings.HasPrefix(env, "bikemeet-") {
 		return env
 	}
 
-	return fmt.Sprintf("viro-%s", strings.ToLower(env))
+	return fmt.Sprintf("bikemeet-%s", strings.ToLower(env))
 }
 
 // CreateBucket creates a bucket with the given bucketName on S3
 func (s *S3Service) CreateBucket(bucketName string) error {
 	bucketName = s.CloudName(bucketName)
 
-	// Build the bucket name with the `viro` prefix.
+	// Build the bucket name with the `bikemeet` prefix.
 	input := &s3.CreateBucketInput{
 		Bucket: aws.String(bucketName),
 	}

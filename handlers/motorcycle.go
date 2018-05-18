@@ -26,8 +26,8 @@ func NewMotorcycleHandler(db *gorm.DB) *MotorcycleHandler {
 	return c
 }
 
-// GetMotorcycleByID retrieves a motorcycle by its ID.
-func (c *MotorcycleHandler) GetMotorcycleByID(ctx echo.Context) error {
+// GetByID retrieves a motorcycle by its ID.
+func (c *MotorcycleHandler) GetByID(ctx echo.Context) error {
 	id64, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
 		return errors.Trace(err)
@@ -41,8 +41,8 @@ func (c *MotorcycleHandler) GetMotorcycleByID(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, result)
 }
 
-// GetMotorcycleByUser retrieves all motorcycles belonging to a UserID.
-func (c *MotorcycleHandler) GetMotorcycleByUser(ctx echo.Context) error {
+// GetByUser retrieves all motorcycles belonging to a UserID.
+func (c *MotorcycleHandler) GetByUser(ctx echo.Context) error {
 	id64, err := strconv.ParseUint(ctx.Param("user_id"), 10, 64)
 	if err != nil {
 		return errors.Trace(err)
@@ -56,8 +56,8 @@ func (c *MotorcycleHandler) GetMotorcycleByUser(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, result)
 }
 
-// InsertMotorcycle creates a new Motorcycle record.
-func (c *MotorcycleHandler) InsertMotorcycle(ctx echo.Context) error {
+// Insert creates a new Motorcycle record.
+func (c *MotorcycleHandler) Insert(ctx echo.Context) error {
 	m := &models.Motorcycle{}
 	if err := ctx.Bind(m); err != nil {
 		return errors.Trace(err)
@@ -75,8 +75,23 @@ func (c *MotorcycleHandler) InsertMotorcycle(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, result)
 }
 
-// RemoveMotorcycle :
-func (c *MotorcycleHandler) RemoveMotorcycle(ctx echo.Context) error {
+// Update alters a existing Motorcycle record.
+func (c *MotorcycleHandler) Update(ctx echo.Context) error {
+	m := &models.Motorcycle{}
+	if err := ctx.Bind(m); err != nil {
+		return errors.Trace(err)
+	}
+
+	result, err := c.Store.Insert(m)
+	if err != nil {
+		return errors.Trace(err)
+	}
+
+	return ctx.JSON(http.StatusOK, result)
+}
+
+// Remove deletes a Motorcycle record.
+func (c *MotorcycleHandler) Remove(ctx echo.Context) error {
 	id64, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
 	if err != nil {
 		return errors.Trace(err)

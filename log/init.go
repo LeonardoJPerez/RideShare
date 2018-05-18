@@ -24,6 +24,17 @@ const (
 
 	// EnvironmentVariableTopic :
 	EnvironmentVariableTopic = "Environment variable"
+
+	// AuthMiddlewareTopic :
+	AuthMiddlewareTopic = "Authorization Middleware"
+	// SessionMiddlewareTopic :
+	SessionMiddlewareTopic = "Session Middleware"
+
+	// StoreLayerTopic :
+	StoreLayerTopic = "Store Layer"
+
+	// ControllerLayerTopic :
+	ControllerLayerTopic = "Controller Layer"
 )
 
 // InitLog :
