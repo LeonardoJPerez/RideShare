@@ -45,12 +45,21 @@ func SetupRouter(e *echo.Echo) {
 
 	motorcycleHandler := handlers.NewMotorcycleHandler()
 	motorcycleRoutes := e.Group("/bike")
-
-	model := &models.Motorcycle{}
-	motorcycleRoutes.POST("", motorcycleHandler.GetInsertHandler(model))
-	motorcycleRoutes.PUT("", motorcycleHandler.GetUpdateHandler(model))
-	motorcycleRoutes.DELETE("/:id", motorcycleHandler.GetDeleteHandler(model))
-	motorcycleRoutes.GET("/:id", motorcycleHandler.GetFetchHandler(model))
 	motorcycleRoutes.GET("/u/:user_id", motorcycleHandler.GetByUser)
+	hookCRUDS(motorcycleRoutes, &models.Motorcycle{})
 
+	ridesHandler := handlers.NewRideHandler()
+	ridesRoutes := e.Group("/rides")
+	ridesRoutes.POST("/dates", ridesHandler.GetRidesByDate)
+	hookCRUDS(ridesRoutes, &models.Ride{})
+}
+
+// hookCRUDS :
+func hookCRUDS(routeGroup *echo.Group, model interface{}) {
+	baseHandler := handlers.Base{}
+
+	routeGroup.POST("", baseHandler.GetInsertHandler(model))
+	routeGroup.GET("/:id", baseHandler.GetFetchHandler(model))
+	routeGroup.PUT("", baseHandler.GetUpdateHandler(model))
+	routeGroup.DELETE("/:id", baseHandler.GetDeleteHandler(model))
 }

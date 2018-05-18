@@ -1,6 +1,9 @@
 package utils
 
-import "time"
+import (
+	"strconv"
+	"time"
+)
 
 // BeginningOfDay returns the Time object representing the start of the day
 func BeginningOfDay(t time.Time) time.Time {
@@ -22,4 +25,15 @@ func BeginningOfToday() time.Time {
 // EndOfToday returns the Time object representing the end of the current day
 func EndOfToday() time.Time {
 	return EndOfDay(time.Now())
+}
+
+// ParseEpoch converts an epoch string into a time.Time object.
+func ParseEpoch(epoch string) (*time.Time, error) {
+	i, err := strconv.ParseInt(epoch, 10, 64)
+	if err != nil {
+		return nil, err
+	}
+
+	tm := time.Unix(i, 0)
+	return &tm, nil
 }

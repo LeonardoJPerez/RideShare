@@ -29,7 +29,7 @@ func (c *MotorcycleHandler) GetByUser(ctx echo.Context) error {
 		return errors.Trace(err)
 	}
 
-	result, err := stores.MotorcycleStore.GetByUser(uint(id64))
+	result, err := stores.Motorcycles.GetByUser(uint(id64))
 	if err != nil {
 		return errors.Trace(err)
 	}

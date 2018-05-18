@@ -9,14 +9,17 @@ import (
 var (
 	// Base store.
 	Base *BaseStore
-	// MotorcycleStore :
-	MotorcycleStore *motorcycleStore
+	// Motorcycles :
+	Motorcycles *motorcycleStore
+	// Rides :
+	Rides *rideStore
 )
 
 // Init :
 func Init(db *gorm.DB) {
-	MotorcycleStore = newMotorcycleStore(db)
-	Base = &MotorcycleStore.BaseStore
+	Rides = newrideStore(db)
+	Motorcycles = newMotorcycleStore(db)
+	Base = &Motorcycles.BaseStore
 }
 
 // BaseStore represents a Store abstraction collection specific stores.
