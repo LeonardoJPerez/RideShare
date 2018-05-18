@@ -64,8 +64,11 @@ func (store *MotorcycleStore) Insert(g *models.Motorcycle) (*models.Motorcycle, 
 }
 
 // Remove :
-func (store *MotorcycleStore) Remove(g *models.Motorcycle) (bool, error) {
-	err := store.Database.Delete(g).Error
+func (store *MotorcycleStore) Remove(id uint) (bool, error) {
+	m := new(models.Motorcycle)
+	m.ID = id
+
+	err := store.Database.Delete(m).Error
 	if err != nil {
 		return false, err
 	}

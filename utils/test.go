@@ -16,8 +16,8 @@ func GetDummyMotorcycle() *models.Motorcycle {
 		Displacement: "471",
 		Make:         "MV Agusta",
 		ModelName:    "Brutale 675",
-		ModelID:      15,
-		MakeID:       16,
+		ModelID:      "15",
+		MakeID:       "16",
 		EngineHP:     "125",
 	}
 	m.ID = 1

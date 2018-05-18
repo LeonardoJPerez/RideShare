@@ -74,3 +74,18 @@ func (c *MotorcycleHandler) InsertMotorcycle(ctx echo.Context) error {
 
 	return ctx.JSON(http.StatusOK, result)
 }
+
+// RemoveMotorcycle :
+func (c *MotorcycleHandler) RemoveMotorcycle(ctx echo.Context) error {
+	id64, err := strconv.ParseUint(ctx.Param("id"), 10, 64)
+	if err != nil {
+		return errors.Trace(err)
+	}
+
+	result, err := c.Store.Remove(uint(id64))
+	if err != nil {
+		return errors.Trace(err)
+	}
+
+	return ctx.JSON(http.StatusOK, result)
+}

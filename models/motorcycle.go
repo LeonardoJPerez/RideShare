@@ -11,13 +11,13 @@ type Motorcycle struct {
 	EngineHP     string `json:"engine_hp"`
 	Image        string `json:"image"`
 	Make         string `json:"make" validate:"required"`
-	MakeID       int64  `json:"make_id" validate:"required"`
-	ModelID      int64  `json:"model_id"`
+	MakeID       string `json:"make_id" validate:"required"`
+	ModelID      string `json:"model_id"`
 	ModelName    string `json:"model" validate:"required"`
 	Nickname     string `json:"nickname"`
 	Thumbnail    string `json:"thumbnail"`
 	VIN          string `json:"vin"`
-	Year         uint   `json:"year" validate:"required"`
+	Year         string `json:"year" validate:"required"`
 }
 
 // CollectionName collection name.
