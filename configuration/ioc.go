@@ -2,6 +2,7 @@ package configuration
 
 import (
 	"github.com/RideShare-Server/log"
+	"github.com/RideShare-Server/stores"
 	"github.com/labstack/echo"
 )
 
@@ -9,9 +10,10 @@ import (
 func Inject(e *echo.Echo) {
 	SetupEnv()
 	SetupCORS(e)
+	SetupRouter(e)
 
 	database := InitializeDBConnection()
-	SetupRouter(e, database)
+	stores.Init(database)
 
 	log.InitLog()
 }

@@ -24,7 +24,7 @@ type SessionStore struct {
 // NewSessionStore :
 func NewSessionStore(db *gorm.DB) *SessionStore {
 	store := new(SessionStore)
-	store.Database = db
+	store.database = db
 
 	return store
 }
@@ -44,7 +44,7 @@ func (s *SessionStore) Get(userID uint, sessionID string) (*models.UserSession, 
 	}
 
 	session := &models.UserSession{}
-	err := s.Database.
+	err := s.database.
 		Where("user_id = ? AND session_id = ?", userID, sessionID).
 		Order("signed_in desc").
 		First(session).Error
@@ -73,7 +73,7 @@ func (s *SessionStore) Validate(userID uint, sessionID string) (bool, error) {
 
 // Insert a new Session record in UserSessions table.
 func (s *SessionStore) Insert(session *models.UserSession) (*models.UserSession, error) {
-	err := s.Database.Create(session).Error
+	err := s.database.Create(session).Error
 	if err != nil {
 		log.Error(log.StoreLayerTopic, err)
 		return nil, errors.Trace(err)

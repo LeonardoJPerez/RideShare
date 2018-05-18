@@ -9,40 +9,26 @@ import (
 )
 
 // MotorcycleStore is responsible for persisting and querying Motorcycle objects.
-type MotorcycleStore struct {
+type motorcycleStore struct {
 	BaseStore
 }
 
 // NewMotorcycleStore :
-func NewMotorcycleStore(database *gorm.DB) *MotorcycleStore {
+func newMotorcycleStore(database *gorm.DB) *motorcycleStore {
 	if database == nil {
 		panic("Database must not be nil")
 	}
 
-	s := new(MotorcycleStore)
-	s.Database = database
+	s := new(motorcycleStore)
+	s.database = database
 
 	return s
 }
 
-// GetByID :
-func (store *MotorcycleStore) GetByID(bikeID uint) (*models.Motorcycle, error) {
-	m := &models.Motorcycle{}
-	err := store.Database.
-		First(m, bikeID).
-		Error
-
-	if err != nil {
-		return nil, errors.Trace(db.CheckNotFoundErr(err))
-	}
-
-	return m, nil
-}
-
 // GetByUser :
-func (store *MotorcycleStore) GetByUser(userID uint) ([]*models.Motorcycle, error) {
+func (store *motorcycleStore) GetByUser(userID uint) ([]*models.Motorcycle, error) {
 	garage := []*models.Motorcycle{}
-	err := store.Database.
+	err := store.database.
 		Where("user_id = ?", userID).
 		Find(&garage).
 		Error
@@ -53,47 +39,14 @@ func (store *MotorcycleStore) GetByUser(userID uint) ([]*models.Motorcycle, erro
 	return garage, nil
 }
 
-// Insert :
-func (store *MotorcycleStore) Insert(m *models.Motorcycle) (*models.Motorcycle, error) {
-	err := store.Database.Create(m).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return m, nil
-}
-
-// Update :
-func (store *MotorcycleStore) Update(m *models.Motorcycle) (*models.Motorcycle, error) {
-	err := store.Database.Save(m).Error
-	if err != nil {
-		return nil, err
-	}
-
-	return m, nil
-}
-
-// Remove :
-func (store *MotorcycleStore) Remove(id uint) (bool, error) {
-	m := new(models.Motorcycle)
-	m.ID = id
-
-	err := store.Database.Delete(m).Error
-	if err != nil {
-		return false, err
-	}
-
-	return true, nil
-}
-
 // SetPreferredBike :
-func (store *MotorcycleStore) SetPreferredBike(userID, bikeID uint) (bool, error) {
+func (store *motorcycleStore) SetPreferredBike(userID, bikeID uint) (bool, error) {
 	bike := new(models.Motorcycle)
 	bike.ID = userID
 
 	pros := map[string]interface{}{
 		"preferred_bike_id": bikeID}
-	err := store.Database.
+	err := store.database.
 		Model(bike).
 		Select("preferred_bike_id").
 		Updates(pros).Error

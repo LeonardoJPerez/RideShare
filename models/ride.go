@@ -6,6 +6,8 @@ import (
 )
 
 type (
+
+	// Address :
 	Address struct {
 		ID      uint
 		Line1   string
@@ -15,6 +17,7 @@ type (
 		Country string
 	}
 
+	// Comment :
 	Comment struct {
 		ID          uint
 		UserID      string
@@ -22,36 +25,33 @@ type (
 		Text        string
 	}
 
+	// RouteMarker :
 	RouteMarker struct {
 		ID        uint
 		Latitude  string
 		Longitude string
 		AddressID uint
+		Name      string
+		Icon      string
+		IsPitStop bool
 	}
 
-	PitStop struct {
-		RouteMarker
-		Name string
-		Icon string
-	}
-
+	// Ride :
 	Ride struct {
 		gorm.Model
-		StartLocation  string
-		FinishLocation string
-		When           string
-		Description    string
-		// HostsIDs       []string
-		// Route          []*RouteMarker
-		// Comments       []*Comment
-		Logo      string
-		Image     string
-		Attending uint
-		IsPrivate bool
-		// Tags           []string
-		SkillLevel  enums.SkillLevel
-		RidingStyle enums.RidingStyle
-		RideType    enums.RideType
-		MakeBrand   string
+		StartLocation  uint              `gorm:"index;not null" json:"start_location"`
+		FinishLocation uint              `gorm:"index;not null" json:"finish_location"`
+		When           string            `gorm:"index;not null" json:"when"`
+		Description    string            `gorm:"not null" json:"description"`
+		Hosts          []string          `gorm:"-" json:"hosts"`
+		Route          []*RouteMarker    `gorm:"-" json:"route"`
+		Comments       []*Comment        `gorm:"-" json:"comments"`
+		Logo           string            `gorm:"" json:"logo"`
+		Name           string            `gorm:"unique_index" json:"name"`
+		Image          string            `gorm:"" json:"image"`
+		IsPrivate      bool              `gorm:"index;not null" json:"is_private"`
+		Tags           []string          `gorm:"-" json:"tags"`
+		SkillLevel     enums.SkillLevel  `gorm:"index;not null" json:"skill_level"`
+		RidingStyle    enums.RidingStyle `gorm:"index;not null" json:"riding_style"`
 	}
 )

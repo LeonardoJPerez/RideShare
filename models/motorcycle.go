@@ -5,6 +5,7 @@ import (
 	"github.com/jinzhu/gorm"
 )
 
+// Motorcycle :
 type Motorcycle struct {
 	gorm.Model
 	UserID       uint           `json:"user_id" validate:"required"`
@@ -20,9 +21,4 @@ type Motorcycle struct {
 	Thumbnail    string         `json:"thumbnail"`
 	VIN          string         `json:"vin"`
 	Year         string         `json:"year" validate:"required"`
-}
-
-// CollectionName collection name.
-func (m Motorcycle) CollectionName() string {
-	return "motorcycles"
 }

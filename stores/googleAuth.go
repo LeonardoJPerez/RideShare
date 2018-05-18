@@ -34,7 +34,7 @@ type AuthResult struct {
 // NewGoogleAuthStore create a new GoogleAuthStore with the database
 func NewGoogleAuthStore(db *gorm.DB) *GoogleAuthStore {
 	GoogleAuthStore := new(GoogleAuthStore)
-	GoogleAuthStore.Database = db
+	GoogleAuthStore.database = db
 	return GoogleAuthStore
 }
 
@@ -47,7 +47,7 @@ func (s *GoogleAuthStore) Put(key string, attr authboss.Attributes) error {
 
 	// Try and find the GoogleAuthData entry and update it, or create a new one
 	authDataAttributes.Key = key
-	err := s.Database.
+	err := s.database.
 		Where(models.GoogleAuth{Key: key}).
 		Assign(authDataAttributes).
 		FirstOrCreate(&models.GoogleAuth{}).Error
@@ -60,7 +60,7 @@ func (s *GoogleAuthStore) Put(key string, attr authboss.Attributes) error {
 // Get fetches the GoogleAuthData record from the database
 func (s *GoogleAuthStore) Get(key string) (result interface{}, err error) {
 	authData := &models.GoogleAuth{}
-	err = s.Database.Where("key = ?", key).First(authData).Error
+	err = s.database.Where("key = ?", key).First(authData).Error
 	if err != nil {
 		return nil, errors.Trace(err)
 	}
@@ -86,7 +86,7 @@ func (s *GoogleAuthStore) PutOAuth(uid string, provider string, attr authboss.At
 
 	// Try and find the GoogleAuthData entry and update it, or create a new one
 	authDataAttributes.Key = uid + provider
-	err := s.Database.
+	err := s.database.
 		Where(models.GoogleAuth{Oauth2Uid: uid, Oauth2Provider: provider}).
 		Assign(authDataAttributes).
 		FirstOrCreate(&models.GoogleAuth{}).Error
@@ -100,7 +100,7 @@ func (s *GoogleAuthStore) PutOAuth(uid string, provider string, attr authboss.At
 func (s *GoogleAuthStore) GetOAuth(uid string, provider string) (result interface{}, err error) {
 	authData := &models.GoogleAuth{}
 	key := uid + provider
-	err = s.Database.Where("key = ?", key).First(authData).Error
+	err = s.database.Where("key = ?", key).First(authData).Error
 	if err != nil {
 		return nil, errors.Trace(err)
 	}

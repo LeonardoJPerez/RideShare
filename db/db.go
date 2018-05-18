@@ -93,7 +93,6 @@ func runAutoMigrations() {
 		&models.Address{},
 		&models.Comment{},
 		&models.Motorcycle{},
-		&models.PitStop{},
 		&models.Ride{},
 		&models.RouteMarker{},
 		&models.User{},

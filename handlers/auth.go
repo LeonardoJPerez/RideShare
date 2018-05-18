@@ -62,7 +62,7 @@ func (c *AuthHandler) ValidateToken(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, res)
 }
 
-// ValidateToken :
+// ChangePassword :
 func (c *AuthHandler) ChangePassword(ctx echo.Context) error {
 	request := new(requestTypes.ChangePasswordRequest)
 	if err := ctx.Bind(request); err != nil {

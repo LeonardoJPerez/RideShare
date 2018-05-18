@@ -25,22 +25,22 @@ const (
 )
 
 const (
-	Adventure RideType = iota + 1
-	CafeRacer
-	Cruiser
-	Custom
-	Dirtbike
-	DualSport
-	Scooter
-	SportTourer
-	Sportbike
-	StandardNaked
-	StreetFighter
-	Supermoto
-	Tourer
-	Trials
-	Trike3Wheel
-	VintageAntique
+	Adventure      RideType = iota + 1
+	CafeRacer               // 2
+	Cruiser                 // 3
+	Custom                  // 4
+	Dirtbike                // 5
+	DualSport               // 6
+	Scooter                 // 7
+	SportTourer             // 8
+	Sportbike               // 9
+	StandardNaked           // 10
+	StreetFighter           // 11
+	Supermoto               // 12
+	Tourer                  // 13
+	Trials                  // 14
+	Trike3Wheel             // 15
+	VintageAntique          // 16
 )
 
 type (

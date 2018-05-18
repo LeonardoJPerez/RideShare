@@ -5,15 +5,15 @@ import (
 
 	"github.com/RideShare-Server/handlers"
 	"github.com/RideShare-Server/handlers/requestTypes"
+	"github.com/RideShare-Server/models"
 	"github.com/RideShare-Server/services/aws"
-	"github.com/jinzhu/gorm"
 	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/labstack/echo"
 )
 
 // SetupRouter inserts the application routes into the Echo context.
-func SetupRouter(e *echo.Echo, db *gorm.DB) {
+func SetupRouter(e *echo.Echo) {
 	e.Validator = &requestTypes.CustomValidator{
 		Validator: validator.New(),
 	}
@@ -43,11 +43,14 @@ func SetupRouter(e *echo.Echo, db *gorm.DB) {
 	authRoutes.POST("/validate", authHandler.ValidateToken)
 	authRoutes.POST("/change", authHandler.ChangePassword)
 
-	motorcycleHandler := handlers.NewMotorcycleHandler(db)
+	motorcycleHandler := handlers.NewMotorcycleHandler()
 	motorcycleRoutes := e.Group("/bike")
-	motorcycleRoutes.POST("", motorcycleHandler.Insert)
-	motorcycleRoutes.DELETE("/:id", motorcycleHandler.Remove)
-	motorcycleRoutes.GET("/:id", motorcycleHandler.GetByID)
+
+	model := &models.Motorcycle{}
+	motorcycleRoutes.POST("", motorcycleHandler.GetInsertHandler(model))
+	motorcycleRoutes.PUT("", motorcycleHandler.GetUpdateHandler(model))
+	motorcycleRoutes.DELETE("/:id", motorcycleHandler.GetDeleteHandler(model))
+	motorcycleRoutes.GET("/:id", motorcycleHandler.GetFetchHandler(model))
 	motorcycleRoutes.GET("/u/:user_id", motorcycleHandler.GetByUser)
 
 }
