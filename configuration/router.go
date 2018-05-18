@@ -4,7 +4,6 @@ import (
 	"net/http"
 
 	"github.com/RideShare-Server/handlers"
-	"github.com/RideShare-Server/handlers/auth"
 	"github.com/RideShare-Server/services/aws"
 	"github.com/jinzhu/gorm"
 
@@ -22,17 +21,17 @@ func SetupRouter(e *echo.Echo, db *gorm.DB) {
 		return c.String(http.StatusOK, "Server is up!")
 	})
 
-	// Initialize AuthBoss decorator.
-	ab := auth.SetupAuth(db)
+	// // Initialize AuthBoss decorator.
+	// ab := auth.SetupAuth(db)
 
-	// Initialize db connection for middleware to use.
-	auth.SetupMiddleware(db)
+	// // Initialize db connection for middleware to use.
+	// auth.SetupMiddleware(db)
 
-	// Auth
-	h := echo.WrapHandler(ab.NewRouter())
-	e.GET("/auth/oauth2/google", h)
-	e.GET("/auth/oauth2/callback/google", h)
-	e.GET("/auth/oauth2/logout", h)
+	// // Auth
+	// h := echo.WrapHandler(ab.NewRouter())
+	// e.GET("/auth/oauth2/google", h)
+	// e.GET("/auth/oauth2/callback/google", h)
+	// e.GET("/auth/oauth2/logout", h)
 
 	// Cognito User access.
 	authProvider := aws.NewCognitoService()
