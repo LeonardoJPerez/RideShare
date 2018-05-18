@@ -4,17 +4,19 @@ import (
 	"net/http"
 
 	"github.com/RideShare-Server/handlers"
+	"github.com/RideShare-Server/handlers/requestTypes"
 	"github.com/RideShare-Server/services/aws"
 	"github.com/jinzhu/gorm"
+	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/labstack/echo"
 )
 
 // SetupRouter inserts the application routes into the Echo context.
 func SetupRouter(e *echo.Echo, db *gorm.DB) {
-	//-----------------------
-	// Base Routes
-	//-----------------------
+	e.Validator = &requestTypes.CustomValidator{
+		Validator: validator.New(),
+	}
 
 	// Base Route
 	e.GET("/hb", func(c echo.Context) error {
