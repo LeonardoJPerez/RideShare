@@ -41,17 +41,17 @@ type (
 		FinishLocation string
 		When           string
 		Description    string
-		HostsIDs       []string
-		Route          []*RouteMarker
-		Comments       []*Comment
-		Logo           string
-		Image          string
-		Attending      uint
-		IsPrivate      bool
-		Tags           []string
-		SkillLevel     enums.SkillLevel
-		RidingStyle    enums.RidingStyle
-		RideType       enums.RideType
-		MakeBrand      string
+		// HostsIDs       []string
+		// Route          []*RouteMarker
+		// Comments       []*Comment
+		Logo      string
+		Image     string
+		Attending uint
+		IsPrivate bool
+		// Tags           []string
+		SkillLevel  enums.SkillLevel
+		RidingStyle enums.RidingStyle
+		RideType    enums.RideType
+		MakeBrand   string
 	}
 )

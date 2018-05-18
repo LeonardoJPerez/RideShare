@@ -63,8 +63,8 @@ func Connect(connectionString string) (*gorm.DB, error) {
 	dbContext.SingularTable(true)
 
 	// Run auto migrations.
-	goEnv, goEnvSet := os.LookupEnv(utils.GoEnv)
-	if goEnvSet && goEnv == "MIGRATE" {
+	migrate, migrateSet := os.LookupEnv(utils.Migrate)
+	if migrateSet && migrate == "TRUE" {
 		runAutoMigrations()
 	}
 

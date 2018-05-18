@@ -27,16 +27,16 @@ func NewMotorcycleStore(database *gorm.DB) *MotorcycleStore {
 
 // GetByID :
 func (store *MotorcycleStore) GetByID(bikeID uint) (*models.Motorcycle, error) {
-	garage := &models.Motorcycle{}
+	m := &models.Motorcycle{}
 	err := store.Database.
-		First(garage, bikeID).
+		First(m, bikeID).
 		Error
 
 	if err != nil {
 		return nil, errors.Trace(db.CheckNotFoundErr(err))
 	}
 
-	return garage, nil
+	return m, nil
 }
 
 // GetByUser :
@@ -44,7 +44,7 @@ func (store *MotorcycleStore) GetByUser(userID uint) ([]*models.Motorcycle, erro
 	garage := []*models.Motorcycle{}
 	err := store.Database.
 		Where("user_id = ?", userID).
-		Find(garage).
+		Find(&garage).
 		Error
 	if err != nil {
 		return nil, errors.Trace(db.CheckNotFoundErr(err))

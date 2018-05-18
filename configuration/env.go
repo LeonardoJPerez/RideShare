@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/discovry/cecil/log"
-	"github.com/discovry/cecil/utils"
+	"github.com/RideShare-Server/log"
+	"github.com/RideShare-Server/utils"
+
 	"github.com/joho/godotenv"
 	"github.com/juju/errors"
 )
@@ -13,7 +14,7 @@ import (
 // SetupEnv method checks if application is being executed in a Production environment.
 // If application is NOT running in production the method will look for a .env file and load the values from it.
 func SetupEnv() {
-	_, inProduction := os.LookupEnv(utils.GoEnv)
+	_, inProduction := os.LookupEnv(utils.Environment)
 	if inProduction {
 		return
 	}

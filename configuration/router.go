@@ -27,4 +27,11 @@ func SetupRouter(e *echo.Echo, db *gorm.DB) {
 	authRoutes.POST("", authHandler.Login)
 	authRoutes.POST("/validate", authHandler.ValidateToken)
 	authRoutes.POST("/change", authHandler.ChangePassword)
+
+	motorcycleHandler := handlers.NewMotorcycleHandler(db)
+	motorcycleRoutes := e.Group("/bike")
+	motorcycleRoutes.POST("", motorcycleHandler.InsertMotorcycle)
+	motorcycleRoutes.GET("/:id", motorcycleHandler.GetMotorcycleByID)
+	motorcycleRoutes.GET("/u/:user_id", motorcycleHandler.GetMotorcycleByUser)
+
 }

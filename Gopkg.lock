@@ -57,26 +57,10 @@
   revision = "2b8494104d86337cdd41d0a49cbed8e4583c0ab4"
 
 [[projects]]
-  name = "github.com/davecgh/go-spew"
-  packages = ["spew"]
-  revision = "346938d642f2ec3594ed81d874461961cd0faa76"
-  version = "v1.1.0"
-
-[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
   version = "v3.2.0"
-
-[[projects]]
-  branch = "master"
-  name = "github.com/discovry/cecil"
-  packages = [
-    "log",
-    "model",
-    "utils"
-  ]
-  revision = "bbbc9744f62454eecba8d85244d80a5193b93767"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -154,12 +138,6 @@
   revision = "04140366298a54a039076d798123ffa108fff46c"
 
 [[projects]]
-  branch = "master"
-  name = "github.com/jinzhu/now"
-  packages = ["."]
-  revision = "b7dfa9a2450405d4ee01eb238dcb873b3dc5336c"
-
-[[projects]]
   name = "github.com/jmespath/go-jmespath"
   packages = ["."]
   revision = "0b12d6b5"
@@ -233,22 +211,10 @@
   revision = "53079a5a8aac9c55ee0cf5fa22878a692f0b9b77"
 
 [[projects]]
-  name = "github.com/pmezard/go-difflib"
-  packages = ["difflib"]
-  revision = "792786c7400a136282c1664665ae0a8db921c6c2"
-  version = "v1.0.0"
-
-[[projects]]
   name = "github.com/sirupsen/logrus"
   packages = ["."]
   revision = "c155da19408a8799da419ed3eeb0cb5db0ad5dbc"
   version = "v1.0.5"
-
-[[projects]]
-  name = "github.com/stretchr/testify"
-  packages = ["assert"]
-  revision = "12b6f73e6084dad08a7c6e575284b177ecafbc71"
-  version = "v1.2.1"
 
 [[projects]]
   branch = "master"
@@ -323,6 +289,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "66754813a3ff03166c9aadfbf8a8405b98b844a5ea30a6f3379e78a36308ec6c"
+  inputs-digest = "2d4600ec3a2a5053c28848b18a5b301e59bb249f70a4814327ed4aa44bf4d533"
   solver-name = "gps-cdcl"
   solver-version = 1

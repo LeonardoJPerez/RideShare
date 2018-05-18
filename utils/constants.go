@@ -20,8 +20,10 @@ const (
 	// EncounteredUnprocessableResponseCode :
 	EncounteredUnprocessableResponseCode = "encountered unprocessable response code [%d]"
 
-	// GoEnv :
-	GoEnv = "GO_ENV"
+	// Environment :
+	Environment = "DEV"
+	// Migrate :
+	Migrate = "MIGRATE"
 
 	DbParams = "DB_PARAMS"
 
