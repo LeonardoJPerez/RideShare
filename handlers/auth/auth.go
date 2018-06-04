@@ -3,22 +3,18 @@ package auth
 import (
 	"encoding/base64"
 	"net/http"
-	"os"
 
-	"github.com/RideShare-Server/log"
-	"github.com/RideShare-Server/stores"
-	"github.com/RideShare-Server/utils"
-
+	"github.com/discovry/streamfinderv3-api/log"
+	"github.com/discovry/streamfinderv3-api/utils"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
-	"github.com/jinzhu/gorm"
 	"github.com/juju/errors"
 	"github.com/justinas/nosurf"
 	"github.com/volatiletech/authboss"
 	// To enable the auth and lock modules, they need to be imported
 	_ "github.com/volatiletech/authboss/auth"
 	_ "github.com/volatiletech/authboss/lock"
-	aboauth "github.com/volatiletech/authboss/oauth2"
+	aboauth2 "github.com/volatiletech/authboss/oauth2"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
@@ -30,7 +26,7 @@ var (
 // buildCookieStore sets up the cookieStore
 func buildCookieStore() {
 	// Get the CookieStoreKey from the environment variables, and decode it
-	encodedCookieKey := utils.GetEnvVariable(utils.AuthCookieStoreKey, "")
+	encodedCookieKey := utils.GetEnvVariable(utils.CookieStoreKey, "")
 	if encodedCookieKey == "" {
 		log.Error(log.AuthTopic, errors.Errorf("Empty Cookie Store Key"))
 	}
@@ -45,7 +41,7 @@ func buildCookieStore() {
 // buildSessionCookieStore sets up the sessionStore
 func buildSessionCookieStore() {
 	// Get the SessionStoreKey from the environment variables, and decode it
-	encodedSessionKey := utils.GetEnvVariable(utils.AuthSessionStoreKey, "")
+	encodedSessionKey := utils.GetEnvVariable(utils.SessionStoreKey, "")
 	if encodedSessionKey == "" {
 		log.Error(log.AuthTopic, errors.Errorf("Empty Session Store Key"))
 	}
@@ -62,34 +58,28 @@ func getOAuth2Providers() map[string]authboss.OAuth2Provider {
 	return map[string]authboss.OAuth2Provider{
 		"google": authboss.OAuth2Provider{
 			OAuth2Config: &oauth2.Config{
-				ClientID:     utils.GetEnvVariable(utils.GoogleAuthClientID, ""),
-				ClientSecret: utils.GetEnvVariable(utils.GoogleAuthClientSecret, ""),
+				ClientID:     utils.GetEnvVariable(utils.GoogleOAuthClientID, ""),
+				ClientSecret: utils.GetEnvVariable(utils.GoogleOAuthClientSecret, ""),
 				Scopes:       []string{`profile`, `email`},
 				Endpoint:     google.Endpoint,
 			},
-			Callback: aboauth.Google,
+			Callback: aboauth2.Google,
 		},
 	}
 }
 
 // SetupAuth sets up the auth package
-func SetupAuth(db *gorm.DB) *authboss.Authboss {
+func SetupAuth() *authboss.Authboss {
 	// Build the Cookie Store and Session Store
 	buildCookieStore()
 	buildSessionCookieStore()
 
-	googleAuthDataStore := stores.NewGoogleAuthStore(db)
+	googleAuthDataStore := NewGoogleOAuthStore(nil)
 
 	ab.Storer = googleAuthDataStore
 	ab.OAuth2Storer = googleAuthDataStore
 	ab.MountPath = "/auth"
-
-	serverPort := os.Getenv("APP_PORT")
-	if serverPort == "" {
-		serverPort = "8888"
-	}
-
-	ab.RootURL = utils.GetEnvVariable(utils.ApplicationRootURL, "http://localhost:"+serverPort)
+	ab.RootURL = utils.GetEnvVariable(utils.AuthRootURL, "")
 	ab.AuthLoginOKPath = utils.GetEnvVariable(utils.AuthLoginOkPath, "")
 	ab.AuthLogoutOKPath = utils.GetEnvVariable(utils.AuthLogoutOkPath, "")
 	ab.OAuth2Providers = getOAuth2Providers()

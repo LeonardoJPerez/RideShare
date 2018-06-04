@@ -1,9 +1,9 @@
-package models
+package auth
 
 import "time"
 
-// GoogleAuth represents the data we get from Google in the auth process
-type GoogleAuth struct {
+// GoogleOAuth represents the data we get from Google in the auth process
+type GoogleOAuth struct {
 	ID        uint      `gorm:"primary_key" json:"id,omitempty"`
 	CreatedAt time.Time `gorm:"" json:"created_at,omitempty"`
 	UpdatedAt time.Time `gorm:"" json:"updated_at,omitempty"`

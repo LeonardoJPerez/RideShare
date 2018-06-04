@@ -19,6 +19,7 @@ var (
 func Init(db *gorm.DB) {
 	Rides = newrideStore(db)
 	Motorcycles = newMotorcycleStore(db)
+
 	Base = &Motorcycles.BaseStore
 }
 

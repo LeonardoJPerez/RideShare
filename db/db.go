@@ -25,6 +25,7 @@ var (
 	dbContext *gorm.DB
 )
 
+// Close :
 func Close() {
 	if err := dbContext.Close(); err != nil {
 		err = errors.Errorf("Error closing the %v DB: %v", databaseName, errors.Cause(err))
@@ -37,6 +38,10 @@ func Close() {
 // Connect opens a connection to the database and runs migrations.
 // Connectionstring format should be i the form of <USER>:<PASS>@tcp(<URI>:<PORT>)/<DBNAME>
 func Connect(connectionString string) (*gorm.DB, error) {
+	if dbContext != nil {
+		return dbContext, nil
+	}
+
 	if connectionString == "" {
 		return nil, fmt.Errorf("Connection string cannot be empty\n Format: USER:PASS@tcp(URI:PORT)/DBNAME")
 	}
@@ -96,6 +101,5 @@ func runAutoMigrations() {
 		&models.Ride{},
 		&models.RouteMarker{},
 		&models.User{},
-		&models.GoogleAuth{},
 	)
 }

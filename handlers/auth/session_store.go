@@ -8,7 +8,7 @@ import (
 	"github.com/volatiletech/authboss"
 )
 
-const sessionCookieName = "bikemeet"
+const sessionCookieName = "streamfinder"
 
 var sessionStore *sessions.CookieStore
 

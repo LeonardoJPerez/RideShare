@@ -63,10 +63,34 @@
   revision = "2b8494104d86337cdd41d0a49cbed8e4583c0ab4"
 
 [[projects]]
+  branch = "master"
+  name = "github.com/danilopolani/gocialite"
+  packages = [
+    "drivers",
+    "structs"
+  ]
+  revision = "b634b3ae5d60e3ed38d3bd2a08641584765bc9d4"
+
+[[projects]]
   name = "github.com/dgrijalva/jwt-go"
   packages = ["."]
   revision = "06ea1031745cb8b3dab3f6a236daf2b0aa468b7e"
   version = "v3.2.0"
+
+[[projects]]
+  name = "github.com/discovry/streamfinderv3-api"
+  packages = [
+    "log",
+    "model",
+    "services",
+    "services/mixer",
+    "services/twitch",
+    "services/youtube",
+    "store",
+    "utils"
+  ]
+  revision = "c0cb2bbe7f3ba211575d9ca83fa96073c4355473"
+  version = "v1.1.0"
 
 [[projects]]
   name = "github.com/fatih/color"
@@ -115,6 +139,12 @@
   packages = ["proto"]
   revision = "925541529c1fa6821df4e44ce2723319eb2be768"
   version = "v1.0.0"
+
+[[projects]]
+  branch = "master"
+  name = "github.com/google/go-querystring"
+  packages = ["query"]
+  revision = "53e6ce116135b80d037921a7fdd5138cf32d7a8a"
 
 [[projects]]
   name = "github.com/gorilla/context"
@@ -296,11 +326,18 @@
   name = "golang.org/x/oauth2"
   packages = [
     ".",
+    "amazon",
+    "bitbucket",
     "clientcredentials",
+    "facebook",
+    "foursquare",
+    "github",
     "google",
     "internal",
     "jws",
-    "jwt"
+    "jwt",
+    "linkedin",
+    "slack"
   ]
   revision = "6881fee410a5daf86371371f9ad451b95e168b71"
 
@@ -312,6 +349,18 @@
     "windows"
   ]
   revision = "79b0c6888797020a994db17c8510466c72fe75d9"
+
+[[projects]]
+  branch = "master"
+  name = "google.golang.org/api"
+  packages = [
+    "gensupport",
+    "googleapi",
+    "googleapi/internal/uritemplates",
+    "googleapi/transport",
+    "youtube/v3"
+  ]
+  revision = "8e296ef260056b6323d10727db40512dac6d92d5"
 
 [[projects]]
   name = "google.golang.org/appengine"
@@ -331,14 +380,26 @@
   version = "v1.0.0"
 
 [[projects]]
+  branch = "master"
+  name = "gopkg.in/danilopolani/gocialite.v0"
+  packages = ["."]
+  revision = "b634b3ae5d60e3ed38d3bd2a08641584765bc9d4"
+
+[[projects]]
   name = "gopkg.in/go-playground/validator.v9"
   packages = ["."]
   revision = "14984d91328f9612b58443cbdf4a077d4fd71091"
   version = "v9.15.0"
 
+[[projects]]
+  name = "gopkg.in/oleiade/reflections.v1"
+  packages = ["."]
+  revision = "2b6ec3da648e3e834dc41bad8d9ed7f2dc6a9496"
+  version = "v1.0.0"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "9d76013e921001ee766c70ad21c8e8a3ee6ada3efb87f3475e4d3245ed45f667"
+  inputs-digest = "f4603f8391393b04efc2f5a7536d1d2a909a75a15ccfe0492e0ae84c88980d2c"
   solver-name = "gps-cdcl"
   solver-version = 1
