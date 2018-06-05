@@ -7,7 +7,6 @@ import (
 	"github.com/RideShare-Server/handlers/auth"
 	"github.com/RideShare-Server/handlers/requestTypes"
 	"github.com/RideShare-Server/models"
-	"github.com/RideShare-Server/services/aws"
 	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/labstack/echo"
@@ -34,13 +33,13 @@ func SetupRouter(e *echo.Echo) {
 	e.GET("/auth/oauth2/callback/google", h)
 	e.GET("/auth/oauth2/logout", h)
 
-	// Cognito User access.
-	authProvider := aws.NewCognitoService()
-	authHandler := handlers.NewAuthHandler(authProvider)
-	authRoutes := e.Group("/auth")
-	authRoutes.POST("", authHandler.Login)
-	authRoutes.POST("/validate", authHandler.ValidateToken)
-	authRoutes.POST("/change", authHandler.ChangePassword)
+	// // Cognito User access.
+	// authProvider := aws.NewCognitoService()
+	// authHandler := handlers.NewAuthHandler(authProvider)
+	// authRoutes := e.Group("/auth")
+	// authRoutes.POST("", authHandler.Login)
+	// authRoutes.POST("/validate", authHandler.ValidateToken)
+	// authRoutes.POST("/change", authHandler.ChangePassword)
 
 	// Motorcycle Handlers
 	motorcycleHandler := handlers.NewMotorcycleHandler()

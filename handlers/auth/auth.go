@@ -79,6 +79,7 @@ func SetupAuth() *authboss.Authboss {
 	ab.Storer = googleAuthDataStore
 	ab.OAuth2Storer = googleAuthDataStore
 	ab.MountPath = "/auth"
+	// TODO: Fix url fetch to accommodate different domains.
 	ab.RootURL = utils.GetEnvVariable(utils.AuthRootURL, "")
 	ab.AuthLoginOKPath = utils.GetEnvVariable(utils.AuthLoginOkPath, "")
 	ab.AuthLogoutOKPath = utils.GetEnvVariable(utils.AuthLogoutOkPath, "")
