@@ -22,6 +22,8 @@ func newMotorcycleStore(database *gorm.DB) *motorcycleStore {
 	s := new(motorcycleStore)
 	s.database = database
 
+	s.migrate(&models.Motorcycle{})
+
 	return s
 }
 

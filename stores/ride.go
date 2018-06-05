@@ -23,6 +23,14 @@ func newrideStore(database *gorm.DB) *rideStore {
 	s := new(rideStore)
 	s.database = database
 
+	s.migrate(
+		&models.Address{},
+		&models.Comment{},
+		&models.Ride{},
+		&models.RouteMarker{},
+		&models.User{},
+	)
+
 	return s
 }
 

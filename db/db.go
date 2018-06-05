@@ -2,12 +2,9 @@ package db
 
 import (
 	"fmt"
-	"os"
 	"time"
 
 	"github.com/RideShare-Server/log"
-	"github.com/RideShare-Server/models"
-	"github.com/RideShare-Server/utils"
 
 	"github.com/jinzhu/gorm"
 
@@ -67,12 +64,6 @@ func Connect(connectionString string) (*gorm.DB, error) {
 
 	dbContext.SingularTable(true)
 
-	// Run auto migrations.
-	migrate, migrateSet := os.LookupEnv(utils.Migrate)
-	if migrateSet && migrate == "TRUE" {
-		runAutoMigrations()
-	}
-
 	return dbContext, err
 }
 
@@ -90,16 +81,4 @@ func CheckNotFoundErr(err error) error {
 // Context :
 func Context() gorm.DB {
 	return *dbContext
-}
-
-// Migrate schema soft changes
-func runAutoMigrations() {
-	dbContext.AutoMigrate(
-		&models.Address{},
-		&models.Comment{},
-		&models.Motorcycle{},
-		&models.Ride{},
-		&models.RouteMarker{},
-		&models.User{},
-	)
 }

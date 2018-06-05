@@ -4,8 +4,10 @@ import (
 	"encoding/base64"
 	"net/http"
 
-	"github.com/discovry/streamfinderv3-api/log"
-	"github.com/discovry/streamfinderv3-api/utils"
+	"github.com/RideShare-Server/log"
+	"github.com/RideShare-Server/utils"
+	"github.com/jinzhu/gorm"
+
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
 	"github.com/juju/errors"
@@ -19,6 +21,25 @@ import (
 	"golang.org/x/oauth2/google"
 )
 
+const (
+	// RootURL :
+	RootURL = "AUTH_ROOT_URL"
+	// LoginOkPath :
+	LoginOkPath = "AUTH_LOGIN_OK_PATH"
+	// LogoutOkPath :
+	LogoutOkPath = "AUTH_LOGOUT_OK_PATH"
+
+	// CookieStoreKey :
+	CookieStoreKey = "AUTH_COOKIE_STORE_KEY"
+	// SessionStoreKey :
+	SessionStoreKey = "AUTH_SESSION_STORE_KEY"
+
+	// GoogleOAuthClientID :
+	GoogleOAuthClientID = "GOOGLE_OAUTH_CLIENT_ID"
+	// GoogleOAuthClientSecret :
+	GoogleOAuthClientSecret = "GOOGLE_OAUTH_CLIENT_SECRET"
+)
+
 var (
 	ab = authboss.New()
 )
@@ -26,7 +47,7 @@ var (
 // buildCookieStore sets up the cookieStore
 func buildCookieStore() {
 	// Get the CookieStoreKey from the environment variables, and decode it
-	encodedCookieKey := utils.GetEnvVariable(utils.CookieStoreKey, "")
+	encodedCookieKey := utils.GetEnvVariable(CookieStoreKey, "")
 	if encodedCookieKey == "" {
 		log.Error(log.AuthTopic, errors.Errorf("Empty Cookie Store Key"))
 	}
@@ -41,7 +62,7 @@ func buildCookieStore() {
 // buildSessionCookieStore sets up the sessionStore
 func buildSessionCookieStore() {
 	// Get the SessionStoreKey from the environment variables, and decode it
-	encodedSessionKey := utils.GetEnvVariable(utils.SessionStoreKey, "")
+	encodedSessionKey := utils.GetEnvVariable(SessionStoreKey, "")
 	if encodedSessionKey == "" {
 		log.Error(log.AuthTopic, errors.Errorf("Empty Session Store Key"))
 	}
@@ -58,8 +79,8 @@ func getOAuth2Providers() map[string]authboss.OAuth2Provider {
 	return map[string]authboss.OAuth2Provider{
 		"google": authboss.OAuth2Provider{
 			OAuth2Config: &oauth2.Config{
-				ClientID:     utils.GetEnvVariable(utils.GoogleOAuthClientID, ""),
-				ClientSecret: utils.GetEnvVariable(utils.GoogleOAuthClientSecret, ""),
+				ClientID:     utils.GetEnvVariable(GoogleOAuthClientID, ""),
+				ClientSecret: utils.GetEnvVariable(GoogleOAuthClientSecret, ""),
 				Scopes:       []string{`profile`, `email`},
 				Endpoint:     google.Endpoint,
 			},
@@ -69,20 +90,20 @@ func getOAuth2Providers() map[string]authboss.OAuth2Provider {
 }
 
 // SetupAuth sets up the auth package
-func SetupAuth() *authboss.Authboss {
+func SetupAuth(database *gorm.DB) *authboss.Authboss {
 	// Build the Cookie Store and Session Store
 	buildCookieStore()
 	buildSessionCookieStore()
 
-	googleAuthDataStore := NewGoogleOAuthStore(nil)
+	googleAuthDataStore := NewGoogleAuthStore(database)
 
 	ab.Storer = googleAuthDataStore
 	ab.OAuth2Storer = googleAuthDataStore
 	ab.MountPath = "/auth"
 	// TODO: Fix url fetch to accommodate different domains.
-	ab.RootURL = utils.GetEnvVariable(utils.AuthRootURL, "")
-	ab.AuthLoginOKPath = utils.GetEnvVariable(utils.AuthLoginOkPath, "")
-	ab.AuthLogoutOKPath = utils.GetEnvVariable(utils.AuthLogoutOkPath, "")
+	ab.RootURL = utils.GetEnvVariable(RootURL, "http://localhost:8888")
+	ab.AuthLoginOKPath = utils.GetEnvVariable(LoginOkPath, "http://localhost:8080/login_success")
+	ab.AuthLogoutOKPath = utils.GetEnvVariable(LogoutOkPath, "http://localhost:8080/logout_success/ok")
 	ab.OAuth2Providers = getOAuth2Providers()
 
 	ab.XSRFName = "csrf_token"

@@ -1,7 +1,10 @@
 package stores
 
 import (
+	"os"
+
 	"github.com/RideShare-Server/db"
+	"github.com/RideShare-Server/utils"
 	"github.com/jinzhu/gorm"
 	"github.com/juju/errors"
 )
@@ -71,4 +74,13 @@ func (store *BaseStore) Remove(id uint, m interface{}) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (store *BaseStore) migrate(values ...interface{}) {
+	// Run auto migrations.
+	migrate, migrateSet := os.LookupEnv(utils.Migrate)
+	if migrateSet && migrate == "TRUE" {
+		// Migrate schema soft changes
+		store.database.AutoMigrate(values...)
+	}
 }

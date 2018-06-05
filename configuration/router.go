@@ -7,6 +7,7 @@ import (
 	"github.com/RideShare-Server/handlers/auth"
 	"github.com/RideShare-Server/handlers/requestTypes"
 	"github.com/RideShare-Server/models"
+	"github.com/jinzhu/gorm"
 	validator "gopkg.in/go-playground/validator.v9"
 
 	"github.com/labstack/echo"
@@ -14,7 +15,7 @@ import (
 )
 
 // SetupRouter inserts the application routes into the Echo context.
-func SetupRouter(e *echo.Echo) {
+func SetupRouter(e *echo.Echo, database *gorm.DB) {
 	e.Validator = &requestTypes.CustomValidator{
 		Validator: validator.New(),
 	}
@@ -25,7 +26,7 @@ func SetupRouter(e *echo.Echo) {
 	})
 
 	// Initialize AuthBoss decorator.
-	ab := auth.SetupAuth()
+	ab := auth.SetupAuth(database)
 
 	// Auth
 	h := echo.WrapHandler(ab.NewRouter())
@@ -59,8 +60,8 @@ func SetupRouter(e *echo.Echo) {
 	ridesRoutes.POST("/dates", ridesHandler.GetRidesByDate)
 	attachCRUDS(ridesRoutes, &models.Ride{})
 
-	e.GET("/auth/google", redirectHandler)
-	e.GET("/auth/google/callback", callbackHandler)
+	// e.GET("/auth/google", redirectHandler)
+	// e.GET("/auth/google/callback", callbackHandler)
 }
 
 // hookCRUDS :
