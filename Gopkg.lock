@@ -78,21 +78,6 @@
   version = "v3.2.0"
 
 [[projects]]
-  name = "github.com/discovry/streamfinderv3-api"
-  packages = [
-    "log",
-    "model",
-    "services",
-    "services/mixer",
-    "services/twitch",
-    "services/youtube",
-    "store",
-    "utils"
-  ]
-  revision = "c0cb2bbe7f3ba211575d9ca83fa96073c4355473"
-  version = "v1.1.0"
-
-[[projects]]
   name = "github.com/fatih/color"
   packages = ["."]
   revision = "507f6050b8568533fb3f5504de8e5205fa62a114"
